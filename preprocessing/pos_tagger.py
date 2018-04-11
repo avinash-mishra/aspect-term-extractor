@@ -7,11 +7,12 @@ class POSTagger:
     def pos_tagger(text):
         text = nltk.word_tokenize(text)
         tagged_pos_list = nltk.pos_tag(text)
-        print(tagged_pos_list)
+        # print(tagged_pos_list)
 
         return tagged_pos_list
 
-    def filter_pos_tag(self, tagged_text):
+    @staticmethod
+    def filter_pos_tag(tagged_text):
         final_text_list = []
         matching_tag = ['NN','NNS','NNP','NNPS','RB','RBR','RBS','JJ','JJR','JJS','VB','VBD','VBG','VBN','VBP','VBZ']
 
@@ -27,4 +28,5 @@ class POSTagger:
 if __name__ == '__main__':
     x = POSTagger()
     k= x.pos_tagger("I am avinash and I am am Indian.")
-    x.filter_pos_tag(k)
+    k = [[('I', 'PRP'), ('am', 'VBP'), ('avinash', 'JJ'), ('and', 'CC'), ('I', 'PRP'), ('am', 'VBP'), ('am', 'VBP'), ('Indian', 'JJ'), ('.', '.')]]
+    x.filter_pos_tag(k[0])
