@@ -1,11 +1,15 @@
 import nltk
-
+from nltk.corpus import stopwords
+from string import punctuation
 
 class POSTagger:
 
     @staticmethod
     def pos_tagger(text):
         text = nltk.word_tokenize(text)
+        stopwords_en = stopwords.words('english')
+        stopwords_en_withpunct = set(stopwords_en).union(set(punctuation))
+        text = [word for word in text if word not in stopwords_en_withpunct]
         tagged_pos_list = nltk.pos_tag(text)
         # print(tagged_pos_list)
 
@@ -27,6 +31,5 @@ class POSTagger:
 
 if __name__ == '__main__':
     x = POSTagger()
-    k= x.pos_tagger("I am avinash and I am am Indian.")
-    k = [[('I', 'PRP'), ('am', 'VBP'), ('avinash', 'JJ'), ('and', 'CC'), ('I', 'PRP'), ('am', 'VBP'), ('am', 'VBP'), ('Indian', 'JJ'), ('.', '.')]]
-    x.filter_pos_tag(k[0])
+    k= x.pos_tagger("I am avinash and I am an Indian.")
+    x.filter_pos_tag(k)
