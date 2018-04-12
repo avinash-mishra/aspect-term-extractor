@@ -6,6 +6,7 @@ import pandas as pd
 train_data = '../data/Laptops_Train_v2.xml'
 test_data = '../data/Laptops_Test_Gold.xml'
 
+pd.set_option('display.max_colwidth', -1)
 
 class Xml2DataFrame:
 
@@ -18,10 +19,8 @@ class Xml2DataFrame:
         target_words = []
         for child in root:
             xml_data['id'] = child.attrib.get('id')
-            # print(child.attrib)
             text = child.find('text').text.lower()
             xml_data['text'] = text
-            # print(text)
             for aspectTerms in child.iter('aspectTerms'):
                 aspectInfos = []
                 for asp_term in aspectTerms:
@@ -39,7 +38,6 @@ class Xml2DataFrame:
         structure_data = self.parse_root(root)
         df = pd.DataFrame([[k.get('id'), k.get('text'), k.get('aspect_info')] for k in iter(structure_data)],
                           columns=['id', 'text', 'aspect_info'])
-        print(df.head())
         return df
 
 
