@@ -21,7 +21,6 @@ class BIO:
                 for index in range(final_list[0] + 1, final_list[1] + 1):
                         df.at[index, 'BIO'] = 'I'
 
-        print(df)
         return df
 
     def bio_mapper(self, common_words_list, prediction):

@@ -33,5 +33,5 @@ class POSTagger:
 
 if __name__ == '__main__':
     x = POSTagger()
-    k = x.pos_tagger("still testing the battery life as i thought it would be better, but am very happy with the upgrade.")
+    k = x.pos_tagger("The battery life is really good and its size is reasonable")
     y = x.filter_pos_tag(k)
