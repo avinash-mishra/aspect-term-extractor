@@ -4,12 +4,14 @@ import xml.etree.ElementTree as ET
 import pandas as pd
 
 train_data = '../data/Laptops_Train_v2.xml'
+test_data = '../data/Laptops_Test_Gold.xml'
+
+pd.set_option('display.max_colwidth', -1)
 
 class Xml2DataFrame:
-    def __init__(self):
-        self.root = ET.parse(train_data).getroot()
 
-    def parse_root(self, root):
+    @staticmethod
+    def parse_root(root):
         """Return pandas dataframe from given xml data"""
         data_list = []
         xml_data = dict()
@@ -17,10 +19,8 @@ class Xml2DataFrame:
         target_words = []
         for child in root:
             xml_data['id'] = child.attrib.get('id')
-            # print(child.attrib)
             text = child.find('text').text.lower()
             xml_data['text'] = text
-            # print(text)
             for aspectTerms in child.iter('aspectTerms'):
                 aspectInfos = []
                 for asp_term in aspectTerms:
@@ -32,15 +32,15 @@ class Xml2DataFrame:
 
         return data_list
 
-    def process_data(self):
+    def process_data(self, path):
+        root = ET.parse(path).getroot()
         """ Initiate the root XML, parse it, and return a dataframe"""
-        structure_data = self.parse_root(self.root)
+        structure_data = self.parse_root(root)
         df = pd.DataFrame([[k.get('id'), k.get('text'), k.get('aspect_info')] for k in iter(structure_data)],
                           columns=['id', 'text', 'aspect_info'])
-        # print(df.head())
         return df
 
 
 if __name__ == '__main__':
     xml2df = Xml2DataFrame()
-    xml_dataframe = xml2df.process_data()
+    xml_dataframe = xml2df.process_data(test_data)
