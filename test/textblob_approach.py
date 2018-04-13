@@ -3,7 +3,9 @@ import sys
 
 
 def main():
-    blob = TextBlob('I like the pizza at the restaurant')
+    text = "I like the pizza at the restaurant"
+    blob = TextBlob(text)
+    print(text)
     tokens = list(blob.words)
     word = []
     sent = []
@@ -12,10 +14,10 @@ def main():
     for words, pos in blob.tags:
         if pos == 'JJ' or pos == 'NN' or pos == 'JJR' or pos == 'NNS':
             word.append(words)
+    print(word)
     if len(word) >= 2:
         for i in range(len(word)):
             if len(word) >= 2:
-                print(i)
                 firstw = word[0]
                 secw = word[1]
                 word.remove(firstw)
@@ -24,8 +26,6 @@ def main():
                 lindx = tokens.index(secw)
                 sent.append(' '.join(tokens[findx:lindx + 1]))
 
-    print(sent)
-    print(tokens)
     print("Sentence and polarity")
     for sentence in sent:
         print(sentence, TextBlob(sentence).polarity)
